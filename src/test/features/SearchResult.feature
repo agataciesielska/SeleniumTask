@@ -1,4 +1,3 @@
-@testgate
 Feature: SearchResult Page
   As a client
   I want to search for specific offer
@@ -7,7 +6,7 @@ Feature: SearchResult Page
   Background: User navigates to home page and sees searchBar
     Given navigate to main page phptravels
     Then searchBar is visible
-
+  @testgate
   Scenario Outline: Verify if listing presents chosen departure and return
     When I choose Flights search type
     And fill From field with <From>
