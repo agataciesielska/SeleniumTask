@@ -1,7 +1,7 @@
 package page.objects;
 
+import driver.DriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import utils.DatePicker;
@@ -11,9 +11,7 @@ import java.time.LocalDate;
 
 public class HomePage extends BasePage {
 
-    WebDriver driver = BasePage.getDriver();
-    DatePicker datePicker = new DatePicker();
-    public final int futureMonthsNumber = 10;
+    private DatePicker datePicker = new DatePicker();
 
     @FindBy(css = "div.hero-form-inner")
     private WebElement searchBox;
@@ -99,19 +97,19 @@ public class HomePage extends BasePage {
     }
 
     public WebElement getGivenSearchType(String tripType) {
-        return driver.findElement(By.cssSelector("div.hero-form-inner ul.row-reverse a." + tripType.toLowerCase()));
+        return DriverManager.getDriver().findElement(By.cssSelector("div.hero-form-inner ul.row-reverse a." + tripType.toLowerCase()));
     }
 
     public void fillFlightsFrom(String city) {
         flightsFromField.click();
-        driver.findElement(By.cssSelector("input.select2-focused")).sendKeys(city);
+        DriverManager.getDriver().findElement(By.cssSelector("input.select2-focused")).sendKeys(city);
         WaitForElement.waitUntilElementIsVisible(highlightedCity);
         highlightedCity.click();
     }
 
     public void fillFlightsTo(String city) {
         flightsToField.click();
-        driver.findElement(By.cssSelector("input.select2-focused")).sendKeys(city);
+        DriverManager.getDriver().findElement(By.cssSelector("input.select2-focused")).sendKeys(city);
         WaitForElement.waitUntilElementIsVisible(highlightedCity);
         highlightedCity.click();
     }
@@ -128,11 +126,13 @@ public class HomePage extends BasePage {
 
         int day = date.getDayOfMonth();
 
-        return driver.findElement(By.cssSelector("div.datepicker.active div.datepicker--cell" +
+        return DriverManager.getDriver().findElement(By.cssSelector("div.datepicker.active div.datepicker--cell" +
                 "[data-date='" + day + "']"));
     }
 
     public void setCalendarMonth(LocalDate date) {
+        final int futureMonthsNumber = 10;
+
         flightsDepartField.click();
         WaitForElement.waitUntilElementIsVisible(activeDatepicker);
 

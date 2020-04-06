@@ -1,15 +1,13 @@
 package steps;
 
+import configuration.AppProperties;
 import driver.DriverManager;
-import io.cucumber.java.en.Given;
-import org.openqa.selenium.WebDriver;
+import cucumber.api.java.en.Given;
 
 public class GlobalSteps {
 
-    WebDriver driver = DriverManager.getDriver();
-
     @Given("^navigate to main page phptravels$")
     public void navigateToMainPagePhptravels() {
-        driver.get("https://www.phptravels.net/");
+        DriverManager.getDriver().get(AppProperties.getAppUrl());
     }
 }

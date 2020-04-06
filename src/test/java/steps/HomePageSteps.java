@@ -1,16 +1,16 @@
 package steps;
 
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import org.testng.Assert;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import org.junit.Assert;
 import page.objects.HomePage;
 
 import java.time.LocalDate;
 
 public class HomePageSteps {
 
-    HomePage homePage = new HomePage();
+    private HomePage homePage = new HomePage();
 
     @Then("searchBar is visible")
     public void searchbarIsVisible() {

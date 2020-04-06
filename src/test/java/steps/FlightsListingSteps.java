@@ -1,12 +1,12 @@
 package steps;
 
-import io.cucumber.java.en.Then;
-import org.testng.Assert;
+import cucumber.api.java.en.Then;
+import org.junit.Assert;
 import page.objects.FlightsListingPage;
 
 public class FlightsListingSteps {
 
-    FlightsListingPage flightsListingPage = new FlightsListingPage();
+    private FlightsListingPage flightsListingPage = new FlightsListingPage();
 
     @Then("^listing presents offers (.*) to (.*)$")
     public void listingPresentsOffersFromSCToToSC(String departure, String destination) {
