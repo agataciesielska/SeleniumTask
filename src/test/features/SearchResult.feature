@@ -5,6 +5,7 @@ Feature: SearchResult Page
 
   Background: User navigates to home page and sees searchBar
     Given navigate to main page phptravels
+    And accept cookies
     Then searchBar is visible
   @testgate
   Scenario Outline: Verify if listing presents chosen departure and return
