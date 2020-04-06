@@ -1,3 +1,4 @@
+@testgate
 Feature: SearchResult Page
   As a client
   I want to search for specific offer
@@ -7,7 +8,7 @@ Feature: SearchResult Page
     Given navigate to main page phptravels
     And accept cookies
     Then searchBar is visible
-  @testgate
+
   Scenario Outline: Verify if listing presents chosen departure and return
     When I choose Flights search type
     And fill From field with <From>
@@ -31,5 +32,5 @@ Feature: SearchResult Page
     And click search button
     Then listing presents ascending sorting by price
     Examples:
-      | From     | FromSC | To     | ToSC | Depart | Adults | Child |
-      | New York | EWR    | Munich | MUC  | 2      | 2      | 2     |
+      | From     | To     | Depart | Adults | Child |
+      | New York | Munich | 2      | 2      | 2     |

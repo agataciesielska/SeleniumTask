@@ -4,6 +4,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.Arrays;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,5 +45,14 @@ public class FlightsListingPage extends BasePage {
             listingPrices.add(price);
         }
         return listingPrices;
+    }
+
+    public boolean isListSortedAsc(List<Integer> givenList) {
+        for (int i = 0; i < givenList.size() - 1; i++) {
+            if (givenList.get(i) > givenList.get(i + 1)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
