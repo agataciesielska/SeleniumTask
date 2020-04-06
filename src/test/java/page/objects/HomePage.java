@@ -18,6 +18,9 @@ public class HomePage extends BasePage {
     @FindBy(css = "div.hero-form-inner")
     private WebElement searchBox;
 
+    @FindBy(css = "div#cookyGotItBtnBox button")
+    private WebElement acceptCookiesButton;
+
     @FindBy(css = "div.hero-form-inner ul.row-reverse a.active")
     private WebElement searchType;
 
@@ -82,6 +85,13 @@ public class HomePage extends BasePage {
         logger.debug("Checking if searchBox is visible");
         WaitForElement.waitUntilElementIsVisible(searchBox);
         return searchBox.isDisplayed();
+    }
+
+    public void acceptCookies() {
+        WaitForElement.waitUntilElementIsVisible(acceptCookiesButton);
+        if (acceptCookiesButton.isDisplayed()) {
+            acceptCookiesButton.click();
+        }
     }
 
     public String getActiveSearchType() {

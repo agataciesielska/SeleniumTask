@@ -61,4 +61,9 @@ public class HomePageSteps {
     public void clickSearchButton() {
         homePage.submitFlightsSearchBox();
     }
+
+    @And("accept cookies")
+    public void acceptCookies() {
+        homePage.acceptCookies();
+    }
 }

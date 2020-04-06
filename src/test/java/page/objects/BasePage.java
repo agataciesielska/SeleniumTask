@@ -19,8 +19,6 @@ public abstract class BasePage {
     }
 
     public static WebDriver getDriver() {
-
-        WebDriver driver = DriverManager.getDriver();
-        return driver;
+       return DriverManager.getDriver();
     }
 }

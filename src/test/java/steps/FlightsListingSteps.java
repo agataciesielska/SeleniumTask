@@ -16,6 +16,6 @@ public class FlightsListingSteps {
 
     @Then("listing presents ascending sorting by price")
     public void listingPresentsAscendingSortingByPrice() {
-
+        System.out.println(flightsListingPage.getListingPrices());
     }
 }
