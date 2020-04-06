@@ -21,6 +21,9 @@ public class HomePage extends BasePage {
     @FindBy(css = "div.hero-form-inner ul.row-reverse a.active")
     private WebElement searchType;
 
+    @FindBy(css = "div#flights button.btn-primary")
+    private WebElement flightsSearchButton;
+
     @FindBy(css = "div.hero-form-inner ul.row-reverse a.flights")
     private WebElement flightsSearchType;
 
@@ -47,6 +50,33 @@ public class HomePage extends BasePage {
 
     @FindBy(css = "div.datepicker.active")
     private WebElement activeDatepicker;
+
+    @FindBy(css = "input[name='fadults']")
+    private WebElement flightsAdultCounter;
+
+    @FindBy(css = "input[name='fchildren']")
+    private WebElement flightsChildCounter;
+
+    @FindBy(css = "input[name='finfant']")
+    private WebElement flightsInfantCounter;
+
+    @FindBy(xpath = "//input[@name='fadults']/following-sibling::*[1][name()='span']/button[.='+']")
+    private WebElement flightsPlusAdultButton;
+
+    @FindBy(xpath = "//input[@name='fadults']/following-sibling::*[1][name()='span']/button[.='-'] ")
+    private WebElement flightsMinusAdultButton;
+
+    @FindBy(xpath = "//input[@name='fchildren']/following-sibling::*[1][name()='span']/button[.='+'] ")
+    private WebElement flightsPlusChildButton;
+
+    @FindBy(xpath = "//input[@name='fchildren']/following-sibling::*[1][name()='span']/button[.='-'] ")
+    private WebElement flightsMinusChildButton;
+
+    @FindBy(xpath = "//input[@name='finfant']/following-sibling::*[1][name()='span']/button[.='+'] ")
+    private WebElement flightsPlusInfantButton;
+
+    @FindBy(xpath = "//input[@name='finfant']/following-sibling::*[1][name()='span']/button[.='-'] ")
+    private WebElement flightsMinusInfantButton;
 
     public boolean isSearchBoxVisible() {
         logger.debug("Checking if searchBox is visible");
@@ -80,38 +110,63 @@ public class HomePage extends BasePage {
         return datePicker.getDateInGivenWeeks(weeks);
     }
 
-    public void switchCalendarViewToGivenDate(LocalDate date) throws InterruptedException {
+    public String getUpperString(WebElement element) {
+        return element.getText().toUpperCase();
+    }
+
+    public WebElement getDay(LocalDate date) {
+
+        int day = date.getDayOfMonth();
+
+        return driver.findElement(By.cssSelector("div.datepicker.active div.datepicker--cell" +
+                "[data-date='" + day + "']"));
+    }
+
+    public void setCalendarMonth(LocalDate date) {
         flightsDepartField.click();
         WaitForElement.waitUntilElementIsVisible(activeDatepicker);
-
-        Thread.sleep(333);
-
-        String activeMonthAndYear = flightsDatepickerTitle.getText().toUpperCase();
 
         String year = String.valueOf(date.getYear());
         String month = String.valueOf(date.getMonth());
 
-        System.out.println(activeMonthAndYear);
-        System.out.println("year: " + year);
-        System.out.println("month: " + month);
-
         for (int i = 0; i < futureMonthsNumber; i++) {
             WaitForElement.waitUntilElementIsVisible(activeDatepicker);
 
-            if (!(activeMonthAndYear.contains(year) && activeMonthAndYear.contains(month))) {
+            if (!(getUpperString(flightsDatepickerTitle).contains(year) && getUpperString(flightsDatepickerTitle).contains(month))) {
                 flightDepartNextMonth.click();
+            } else {
+                break;
             }
         }
-        getGivenDateElement(date).click();
     }
 
-    public WebElement getGivenDateElement(LocalDate date) throws InterruptedException {
+    private void setPassengers(int passengers, WebElement counter, WebElement counterMinus, WebElement counterPlus) {
+        int currentCounter = Integer.parseInt(counter.getAttribute("value"));
 
-        int day = date.getDayOfMonth();
+        while (passengers != currentCounter) {
+            if (currentCounter > passengers) {
+                counterMinus.click();
+            } else {
+                counterPlus.click();
+            }
+            currentCounter = Integer.parseInt(counter.getAttribute("value"));
+        }
+    }
 
-        Thread.sleep(3333);
+    public void setFlightAdults(int adultsNumber) {
+        setPassengers(adultsNumber, flightsAdultCounter, flightsMinusAdultButton, flightsPlusAdultButton);
+    }
 
-        return driver.findElement(By.cssSelector("div.datepicker.active div.datepicker--cell" +
-                "[data-date='" + day + "']"));
+    public void setFlightsChildren(int childrenNumber) {
+        setPassengers(childrenNumber, flightsChildCounter, flightsMinusChildButton, flightsPlusChildButton);
+    }
+
+    public void setFlightsInfants(int infantsNumber) {
+        setPassengers(infantsNumber, flightsInfantCounter, flightsMinusInfantButton, flightsPlusInfantButton);
+    }
+
+    public void submitFlightsSearchBox() {
+        WaitForElement.waitUntilElementIsVisible(flightsSearchButton);
+        flightsSearchButton.click();
     }
 }

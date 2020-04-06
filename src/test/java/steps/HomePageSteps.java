@@ -6,6 +6,8 @@ import io.cucumber.java.en.When;
 import org.testng.Assert;
 import page.objects.HomePage;
 
+import java.time.LocalDate;
+
 public class HomePageSteps {
 
     HomePage homePage = new HomePage();
@@ -15,25 +17,48 @@ public class HomePageSteps {
         Assert.assertTrue(homePage.isSearchBoxVisible());
     }
 
-    @When("^user chooses (.*) search type$")
-    public void userClicksOnFlightsSearchType(String searchType) {
+    @When("^I choose (.*) search type$")
+    public void chooseSearchType(String searchType) {
         homePage.getGivenSearchType(searchType).click();
         Assert.assertEquals(homePage.getActiveSearchType(), searchType);
     }
 
-    @And("^user fill From field with (.*)$")
-    public void userFillFromFieldWithText(String city) {
+    @And("^fill From field with (.*)$")
+    public void fillFromFieldWithText(String city) {
         homePage.fillFlightsFrom(city);
     }
 
-    @And("^user fill To field with (.*)$")
-    public void userFillToFieldWithText(String city) {
+    @And("^fill To field with (.*)$")
+    public void fillToFieldWithText(String city) {
         homePage.fillFlightsTo(city);
     }
 
-    @And("^user fill Depart date in (.*) weeks$")
-    public void userFillDepartFieldWithDepart(int weeks) throws InterruptedException {
-        homePage.switchCalendarViewToGivenDate(homePage.getNowDatePlusWeeks(weeks));
-        homePage.getGivenDateElement(homePage.getNowDatePlusWeeks(weeks)).click();
+    @And("^fill Depart date in (.*) weeks$")
+    public void fillDepartFieldWithDepart(int weeks) {
+
+        LocalDate date = homePage.getNowDatePlusWeeks(weeks);
+
+        homePage.setCalendarMonth(date);
+        homePage.getDay(date).click();
+    }
+
+    @And("^fill Adult field with (.*)$")
+    public void fillAdultFieldWith(int adultsNumber) {
+        homePage.setFlightAdults(adultsNumber);
+    }
+
+    @And("^fill Child field with (.*)$")
+    public void fillChildFieldWith(int childrenNumber) {
+        homePage.setFlightsChildren(childrenNumber);
+    }
+
+    @And("^fill Infant field with (.*)$")
+    public void fillInfantFieldWith(int infantNumber) {
+        homePage.setFlightsChildren(infantNumber);
+    }
+
+    @And("click search button")
+    public void clickSearchButton() {
+        homePage.submitFlightsSearchBox();
     }
 }

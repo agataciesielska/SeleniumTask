@@ -1,3 +1,4 @@
+@testgate
 Feature: SearchResult Page
   As a client
   I want to search for specific offer
@@ -8,14 +9,27 @@ Feature: SearchResult Page
     Then searchBar is visible
 
   Scenario Outline: Verify if listing presents chosen departure and return
-    When user chooses Flights search type
-    And user fill From field with <From>
-    And user fill To field with <To>
-    And user fill Depart field with <Depart>
-    And user fill Adult field with <Adults>
-    And user fill Child field with <Child>
-    And user clicks search button
-    Then heading contains <FromSC> and <ToSC>
+    When I choose Flights search type
+    And fill From field with <From>
+    And fill To field with <To>
+    And fill Depart date in <Depart> weeks
+    And fill Adult field with <Adults>
+    And fill Child field with <Child>
+    And click search button
+    Then listing presents offers <FromSC> to <ToSC>
     Examples:
-      | From     | FromSC | To     | ToSC | Depart          | Adults | Child |
-      | New York | EWR    | Munich | MUC  | + 2 weeks | 2      | 2     |
+      | From     | FromSC | To     | ToSC | Depart | Adults | Child |
+      | New York | EWR    | Munich | MUC  | 2      | 2      | 2     |
+
+  Scenario Outline: Verify if listing presents ascending sorting by price
+    When I choose Flights search type
+    And fill From field with <From>
+    And fill To field with <To>
+    And fill Depart date in <Depart> weeks
+    And fill Adult field with <Adults>
+    And fill Child field with <Child>
+    And click search button
+    Then listing presents ascending sorting by price
+    Examples:
+      | From     | FromSC | To     | ToSC | Depart | Adults | Child |
+      | New York | EWR    | Munich | MUC  | 2      | 2      | 2     |
